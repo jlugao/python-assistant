@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "python-assistant"
+description = ''
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "jlugao", email = "joaolhullier@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://github.com/unknown/python-assistant#readme"
+Issues = "https://github.com/unknown/python-assistant/issues"
+Source = "https://github.com/unknown/python-assistant"
+
+[tool.hatch.version]
+path = "python_assistant/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "pytest-cov",
+  "ruff",
+  "GitPython",
+  "ryaml",
+  "orjson"
+]
+[tool.hatch.envs.default.scripts]
+cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=python_assistant --cov=tests {args}"
+no-cov = "cov --no-cov {args}"
+run = "python ./python_assistant/main.py"
+
+[[tool.hatch.envs.test.matrix]]
+python = ["311"]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+omit = [
+  "python_assistant/__about__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
